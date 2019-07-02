@@ -16,11 +16,26 @@ namespace ymov
             var mongo = new MongoClient("mongodb://localhost:27017");
             var db = mongo.GetDatabase("ymov");
 
-            ImportData(db);
+            ImportCollection(db, "titleBasics", @"/home/philip/Downloads/title.basics.tsv", CreateTitleBasic);
+            ImportCollection(db, "titleAkas", @"/home/philip/Downloads/title.akas.tsv", CreateTitleAka);
 
             //var title = titleBasics.Find(x => x.Name.StartsWith("Rio")).FirstOrDefault();
 
             Console.WriteLine("Done!");
+        }
+
+        static void ImportCollection<TDto>(IMongoDatabase db, string collName, string tsvPath, Func<string[], TDto> generator)
+        {
+            var coll = CreateCollection<TDto>(db, collName);
+            var chunks = ChunksOfSize(EnumerateTsv(tsvPath, generator), 10*1000);
+            var count = 0;
+
+            foreach (var chunk in chunks)
+            {
+                coll.InsertMany(chunk);
+                count += chunk.Count;
+                Console.WriteLine($"{count} items inserted into {collName}");
+            }
         }
 
         static IMongoCollection<T> CreateCollection<T>(IMongoDatabase db, string collectionName)
@@ -36,20 +51,6 @@ namespace ymov
 
             db.CreateCollection(collectionName);
             return db.GetCollection<T>(collectionName);
-        }
-
-        static void ImportData(IMongoDatabase db)
-        {
-            var titleBasics = CreateCollection<TitleBasicDto>(db, "titleBasics");
-            var chunks = ChunksOfSize(EnumerateTsv(@"/home/philip/Downloads/title.basics.tsv", CreateTitleBasic), 10*1000);
-            var count = 0;
-
-            foreach (var chunk in chunks)
-            {
-                titleBasics.InsertMany(chunk);
-                count += chunk.Count;
-                Console.WriteLine($"{count} items inserted");
-            }
         }
 
         static int? TryParseInt(string str)
@@ -75,6 +76,13 @@ namespace ymov
                 dto.Runtime = TimeSpan.FromMinutes(minutes);
             }
             return dto;
+        }
+
+        static TitleAkaDto CreateTitleAka(string[] tokens)
+        {
+            return new TitleAkaDto
+            {
+            };
         }
 
         static IEnumerable<T> EnumerateTsv<T>(string path, Func<string[], T> generator)
