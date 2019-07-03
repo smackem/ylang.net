@@ -7,7 +7,7 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ymov
+namespace ylang.net.db.import
 {
     class TitleAkaDto
     {
@@ -16,7 +16,9 @@ namespace ymov
         private ObjectId _id;
 #pragma warning restore 0169
 
-        public int Ordering { get; set; }
+        public string Id { get; set; }
+
+        public int? Ordering { get; set; }
 
         public string Title { get; set; }
 

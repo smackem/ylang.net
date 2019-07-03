@@ -7,7 +7,7 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ymov
+namespace ylang.net.db.import
 {
     class TitleBasicDto
     {
