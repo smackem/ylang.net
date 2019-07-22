@@ -6,9 +6,9 @@ using System.IO;
 
 namespace ylang.db.import
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var mongo = new MongoClient("mongodb://localhost:27017");
             var db = mongo.GetDatabase("ymov");
@@ -17,6 +17,8 @@ namespace ylang.db.import
             importer.ImportCollection("titleBasics", @"/home/philip/Downloads/title.basics.tsv", Mapping.CreateTitleBasic);
             importer.ImportCollection("titleAkas", @"/home/philip/Downloads/title.akas.tsv", Mapping.CreateTitleAka);
             importer.ImportCollection("titleCrew", @"/home/philip/Downloads/title.crew.tsv", Mapping.CreateTitleCrew);
+            importer.ImportCollection("titlePrincipals", @"/home/philip/Downloads/title.principals.tsv", Mapping.CreateTitlePrincipal);
+            importer.ImportCollection("nameBasics", @"/home/philip/Downloads/name.basics.tsv", Mapping.CreateNameBasic);
 
             //var title = titleBasics.Find(x => x.Name.StartsWith("Rio")).FirstOrDefault();
 

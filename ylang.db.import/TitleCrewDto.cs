@@ -12,8 +12,8 @@ namespace ylang.db.import
         
         public string Id { get; set; }
 
-        public string[] Directors { get; set; }
+        public string[] DirectorNameIds { get; set; }
 
-        public string[] Writers { get; set; }
+        public string[] WriterNameIds { get; set; }
     }
 }

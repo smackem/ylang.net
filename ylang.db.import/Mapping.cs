@@ -14,7 +14,7 @@ namespace ylang.db.import
     {
         public static TitleBasicDto CreateTitleBasic(string[] tokens)
         {
-            var dto = new TitleBasicDto
+            return new TitleBasicDto
             {
                 Id = tokens[0],
                 TitleType = tokens[1],
@@ -23,13 +23,9 @@ namespace ylang.db.import
                 IsAdult = TryParseInt(tokens[4]) != 0,
                 StartYear = TryParseInt(tokens[5]),
                 EndYear = TryParseInt(tokens[6]),
+                Runtime = TryParseMinutes(tokens[7]),
                 Genres = tokens[8].Split(','),
             };
-            if (int.TryParse(tokens[7], out var minutes))
-            {
-                dto.Runtime = TimeSpan.FromMinutes(minutes);
-            }
-            return dto;
         }
 
         public static TitleAkaDto CreateTitleAka(string[] tokens)
@@ -52,14 +48,49 @@ namespace ylang.db.import
             return new TitleCrewDto
             {
                 Id = tokens[0],
-                Directors = tokens[1].Split(','),
-                Writers = tokens[2].Split(','),
+                DirectorNameIds = tokens[1].Split(','),
+                WriterNameIds = tokens[2].Split(','),
+            };
+        }
+
+        public static TitlePrincipalDto CreateTitlePrincipal(string[] tokens)
+        {
+            return new TitlePrincipalDto
+            {
+                Id = tokens[0],
+                Ordering = TryParseInt(tokens[1]),
+                NameId = tokens[2],
+                Category = tokens[3],
+                Job = tokens[4],
+                Characters = tokens[5].Split(','),
+            };
+        }
+
+        public static NameBasicDto CreateNameBasic(string[] tokens)
+        {
+            return new NameBasicDto
+            {
+                Id = tokens[0],
+                Name = tokens[1],
+                BirthYear = TryParseInt(tokens[2]) ?? -1,
+                DeathYear = TryParseInt(tokens[3]),
+                Professions = tokens[4].Split(','),
+                KnownForTitleIds = tokens[5].Split(','),
             };
         }
 
         private static int? TryParseInt(string str)
         {
-            return int.TryParse(str, out var n) ? n : default(int?);
+            return int.TryParse(str, out var n)
+                ? n
+                : default(int?);
+        }
+
+        private static TimeSpan? TryParseMinutes(string str)
+        {
+            return int.TryParse(str, out var minutes)
+                ? TimeSpan.FromMinutes(minutes)
+                : default(TimeSpan?);
         }
     }
 }
