@@ -7,7 +7,7 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ylang.net.db.import
+namespace ylang.db.import
 {
     public class Importer
     {

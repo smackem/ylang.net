@@ -6,8 +6,9 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.IO;
+using ylang.db.import;
 
-namespace ylang.net.db.import
+namespace ylang.db.import
 {
     static class Mapping
     {
@@ -43,6 +44,16 @@ namespace ylang.net.db.import
                 Types = tokens[5].Split(','),
                 Attributes = tokens[6].Split(','),
                 IsOriginalTitle = TryParseInt(tokens[7]) != 0,
+            };
+        }
+
+        public static TitleCrewDto CreateTitleCrew(string[] tokens)
+        {
+            return new TitleCrewDto
+            {
+                Id = tokens[0],
+                Directors = tokens[1].Split(','),
+                Writers = tokens[2].Split(','),
             };
         }
 

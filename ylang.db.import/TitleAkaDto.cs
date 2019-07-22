@@ -1,15 +1,9 @@
-using System;
-using System.Linq;
-using System.IO.Compression;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
-using System.Collections.Generic;
-using System.IO;
 
-namespace ylang.net.db.import
+namespace ylang.db.import
 {
-    class TitleAkaDto
+    internal class TitleAkaDto
     {
 #pragma warning disable 0169
         [BsonId]

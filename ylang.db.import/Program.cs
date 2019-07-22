@@ -4,7 +4,7 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ylang.net.db.import
+namespace ylang.db.import
 {
     class Program
     {
@@ -16,6 +16,7 @@ namespace ylang.net.db.import
 
             importer.ImportCollection("titleBasics", @"/home/philip/Downloads/title.basics.tsv", Mapping.CreateTitleBasic);
             importer.ImportCollection("titleAkas", @"/home/philip/Downloads/title.akas.tsv", Mapping.CreateTitleAka);
+            importer.ImportCollection("titleCrew", @"/home/philip/Downloads/title.crew.tsv", Mapping.CreateTitleCrew);
 
             //var title = titleBasics.Find(x => x.Name.StartsWith("Rio")).FirstOrDefault();
 

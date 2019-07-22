@@ -7,9 +7,9 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ylang.net.db.import
+namespace ylang.db.import
 {
-    class TitleBasicDto
+    internal class TitleBasicDto
     {
 #pragma warning disable 0169
         [BsonId]

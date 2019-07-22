@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ylang.net.db.import
+namespace ylang.db.import
 {
-    static class EnumerableExtensions
+    internal static class EnumerableExtensions
     {
         public static IEnumerable<IReadOnlyCollection<T>> ChunksOfSize<T>(this IEnumerable<T> collection, int size)
         {
